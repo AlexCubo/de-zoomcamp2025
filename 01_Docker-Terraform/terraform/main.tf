@@ -12,3 +12,18 @@ provider "google" {
     project = "de-zoomcamp2025"
     region  = "europe-west1"
   }
+
+resource "google_storage_bucket" "dezc2025-bucket" {
+  name          = "dezc2025-bucket_prj639804374698"
+  location      = "EU"
+  force_destroy = true
+
+  lifecycle_rule {
+    condition {
+      age = 1
+    }
+    action {
+      type = "AbortIncompleteMultipartUpload"
+    }
+  }
+}
