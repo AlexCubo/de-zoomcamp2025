@@ -1,3 +1,9 @@
+variable "credentials" {
+  description = "credentials to access gcp resources"
+  default = "./keys/de-zoocamp2025_terraform-sa_key6b8a5.json"
+}
+
+
 variable "project" {
   description = "Project"
   default     = "de-zoomcamp2025"
