@@ -9,6 +9,7 @@ terraform {
 
 provider "google" {
   #credentials = "/home/alessandro/.terraform.d/keys/de-zoocamp2025_terraform-sa_key6b8a5.json"
+  credentials = file(var.credentials)
   project = var.project
   region  = var.region
 }
@@ -30,5 +31,4 @@ resource "google_storage_bucket" "dezc2025-bucket" {
 
 resource "google_bigquery_dataset" "dezc2025-dataset" {
   dataset_id = var.bq_dataset_name
-
 }
