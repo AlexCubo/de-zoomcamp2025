@@ -18,7 +18,7 @@ variable "bq_dataset_name" {
   default     = "dezc2025_bq_dataset"
 }
 
-variable "gcs_storage class" {
+variable "gcs_storage_class" {
   description = "Class of the gc storage bucket"
   default     = "STANDARD"
 }
