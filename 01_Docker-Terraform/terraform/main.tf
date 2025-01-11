@@ -27,3 +27,8 @@ resource "google_storage_bucket" "dezc2025-bucket" {
     }
   }
 }
+
+resource "google_bigquery_dataset" "dezc2025-dataset" {
+  dataset_id                  = "dezc2025_bq_dataset"
+
+}
