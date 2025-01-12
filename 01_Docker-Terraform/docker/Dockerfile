@@ -1,11 +1,11 @@
 FROM python:3.12
 
-WORKDIR app/
+WORKDIR /app
 
-COPY requirements.txt app/requirements.txt
-COPY data app/data
-COPY pipeline.py app/pipeline.py
+COPY requirements.txt requirements.txt
+COPY data data
+COPY pipeline.py pipeline.py
 
-RUN pip install -r app/requirements.txt
+RUN pip install -r requirements.txt
 
-ENTRYPOINT [ "bash" ]
+ENTRYPOINT [ "python", "pipeline.py" ]
