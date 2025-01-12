@@ -2,6 +2,23 @@
 
 ### Docker & SQL
 
+#### Question 1 
+**Which sub-command does this:** *Remove one or more images* 
+$ docker --help
+
+**Answer:**
+rmi         Remove one or more images
+
+
+#### Questions 2
+**What's the version of pip in the image**
+
+**Answer:**
+```root@80e39b05b31e:/app# pip --version
+pip 24.3.1 from /usr/local/lib/python3.12/site-packages/pip (python 3.12)
+```
+
+
 ### Terraform
 
 #### Question 7 - Creating resources
