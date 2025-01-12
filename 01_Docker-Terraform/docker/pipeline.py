@@ -7,4 +7,4 @@ print(sys.argv)
 
 day = sys.argv[1]
 
-print('Job finished successfully for day = f{day}')
+print(f'Job finished successfully for day = {day}')
