@@ -10,7 +10,7 @@ $ docker run -it \
  -e POSTGRES_DB="ny_taxi" \
  -v $(pwd)/ny_taxi_postgres_data:/var/lib/postgres/data \
  -p 5432:5432 \
-postgres:13
+ postgres:13
 
 #### Access postgres database
 
