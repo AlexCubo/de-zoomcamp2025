@@ -18,6 +18,38 @@ rmi         Remove one or more images
 pip 24.3.1 from /usr/local/lib/python3.12/site-packages/pip (python 3.12)
 ```
 
+#### Question 3 
+**How many taxi trips were made on Oct 18th 2019?**
+
+Input in pgadmin:
+```
+SELECT COUNT(*)
+FROM green_taxi_data
+WHERE lpep_pickup_datetime > '2019-10-18 00:00:00' 
+	AND lpep_dropoff_datetime < '2019-10-19 00:00:00';
+```
+Answer:
+```
+17417
+```
+
+#### Question 4
+** Which was the pickup day with the longest trip distane **
+
+
+![alt text](image.png)
+
+#### Question 5
+** Which were the top pickup locations with over 13,000 in total_amount
+for day 2019-10-18 ** 
+
+![alt text](image-1.png)
+
+Answer:  
+*East Harlem North, East Harlem South, Morningside Heights*
+
+
+
 
 ### Terraform
 
