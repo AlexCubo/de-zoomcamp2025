@@ -37,13 +37,13 @@ Answer:
 **Which was the pickup day with the longest trip distane**
 
 
-![alt text](image.png)
+![alt text](./images/image.png)
 
 #### Question 5 - Three biggest pickup zones
 ** Which were the top pickup locations with over 13,000 in total_amount
 for day 2019-10-18 ** 
 
-![alt text](image-2.png)
+![alt text](./images/image-2.png)
 
 Answer:  
 *East Harlem North, East Harlem South, Morningside Heights*
@@ -51,7 +51,7 @@ Answer:
 #### Question 6 -Largest trip
 **For the passengers picked up in October 2019 in the zone "East Halem North" which was the drop off zone that had the largest tip?** 
 
-![alt text](image-1.png)
+![alt text](./images/image-1.png)
 
 Answer:
 *JFK Airport*
