@@ -18,7 +18,7 @@ rmi         Remove one or more images
 pip 24.3.1 from /usr/local/lib/python3.12/site-packages/pip (python 3.12)
 ```
 
-#### Question 3 
+#### Question 3 - Count records
 **How many taxi trips were made on Oct 18th 2019?**
 
 Input in pgadmin:
@@ -33,23 +33,28 @@ Answer:
 17417
 ```
 
-#### Question 4
-** Which was the pickup day with the longest trip distane **
+#### Question 4 - Longest trip for each day
+**Which was the pickup day with the longest trip distane**
 
 
 ![alt text](image.png)
 
-#### Question 5
+#### Question 5 - Three biggest pickup zones
 ** Which were the top pickup locations with over 13,000 in total_amount
 for day 2019-10-18 ** 
 
-![alt text](image-1.png)
+![alt text](image-2.png)
 
 Answer:  
 *East Harlem North, East Harlem South, Morningside Heights*
 
+#### Question 6 -Largest trip
+**For the passengers picked up in October 2019 in the zone "East Halem North" which was the drop off zone that had the largest tip?** 
 
+![alt text](image-1.png)
 
+Answer:
+*JFK Airport*
 
 ### Terraform
 
