@@ -51,3 +51,8 @@ the credentials (email and password)
 
 5. Register to the postgres server
     (see tutorial "DE Zoomcamp 1.2.3 - Connecting pgAdmin and Postgres")
+
+#### Convert Jupyter notebook inot .py file
+In the folder where you have your <source>.ipynb file, write in bash:
+
+$ jupyter nbconvert --to=script <source>.ipynb
