@@ -66,3 +66,22 @@ $ python ingest_data.py \
     --port=5432 \
     --db=ny_taxi \
     --table_name=green_taxi_data
+
+#### Dockerization of the ingest_data.py
+For that we created a Dockerfile with all commands to run a docker
+container where ingest_data.py is launched
+
+$ docker build -t taxi_ingest:v001 .
+
+#### Run the container where the ingest_data.py is executed
+
+$ docker run -it \
+    --network=pg-network \
+    --name=ingestion_pipeline \
+    ingest_taxi:v001 \
+    --user=root \
+    --password=root \
+    --host=pg-database \
+    --port=5432 \
+    --db=ny_taxi \
+    --table_name=green_taxi_data
