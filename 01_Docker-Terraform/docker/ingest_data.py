@@ -8,7 +8,6 @@ from sqlalchemy import create_engine
 from time import time
 
 
-
 def main(params):
     user = params.user
     password = params.password
@@ -59,8 +58,8 @@ def main(params):
             print(f'Inserted Chunk number {i}, took {t_end - t_start}')
 
     except StopIteration:
-        print(f'All Chunks of data ingested into postgres database.')
-    
+        print(f'All Chunks of data ingested into postgres database.')  
+
 if __name__ == '__main__':
 
     parser = argparse.ArgumentParser(
