@@ -8,6 +8,7 @@ from sqlalchemy import create_engine
 from time import time
 
 
+
 def main(params):
     user = params.user
     password = params.password
@@ -26,7 +27,7 @@ def main(params):
 
     #load taxi lookup data
     zone_lookup_df = pd.read_csv(zone_lookup)
-    df.head(n=0).to_sql(name='taxi_zone_lookup', con=engine, if_exists='replace')
+    zone_lookup_df.head(n=0).to_sql(name='taxi_zone_lookup', con=engine, if_exists='replace')
     zone_lookup_df.to_sql(name='taxi_zone_lookup', con=engine, if_exists='replace')
 
     # load green data
@@ -42,25 +43,24 @@ def main(params):
     df.to_sql(name=table_name, con=engine, if_exists='append')
 
     try:
-    i=0
-    while True:
+        i=0
+        while True:
 
-        t_start = time()
-        df = next(df_iter)
-        i+=1
+            t_start = time()
+            df = next(df_iter)
+            i+=1
 
-        df.lpep_pickup_datetime = pd.to_datetime(df.lpep_pickup_datetime)
-        df.lpep_dropoff_datetime = pd.to_datetime(df.lpep_dropoff_datetime)
+            df.lpep_pickup_datetime = pd.to_datetime(df.lpep_pickup_datetime)
+            df.lpep_dropoff_datetime = pd.to_datetime(df.lpep_dropoff_datetime)
 
-        df.to_sql(name=table_name, con=engine, if_exists='append')
-        t_end = time()
+            df.to_sql(name=table_name, con=engine, if_exists='append')
+            t_end = time()
 
-        print(f'Inserted Chunk number {i}, took {t_end - t_start}')
+            print(f'Inserted Chunk number {i}, took {t_end - t_start}')
 
     except StopIteration:
-    print(f'All Chunks of data ingested into postgres database.')
+        print(f'All Chunks of data ingested into postgres database.')
     
-
 if __name__ == '__main__':
 
     parser = argparse.ArgumentParser(
@@ -68,12 +68,12 @@ if __name__ == '__main__':
 
     # user, password, host,database, port, table
     # url of csv files
-    parser.add_argument('user', help='username for postgres')
-    parser.add_argument('password', help='password for postgres')
-    parser.add_argument('host', help='host for postgres')
-    parser.add_argument('db', help='database in postgres')
-    parser.add_argument('port', help='postgres port')
-    parser.add_argument('table_name', help='name of the table')
+    parser.add_argument('--user', help='username for postgres')
+    parser.add_argument('--password', help='password for postgres')
+    parser.add_argument('--host', help='host for postgres')
+    parser.add_argument('--db', help='database in postgres')
+    parser.add_argument('--port', help='postgres port')
+    parser.add_argument('--table_name', help='name of the table')
 
     args = parser.parse_args()
     
