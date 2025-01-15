@@ -71,7 +71,7 @@ $ python ingest_data.py \
 For that we created a Dockerfile with all commands to run a docker
 container where ingest_data.py is launched
 ```
-$ docker build -t taxi_ingest:v001 .
+$ docker build -t ingest_taxi:v001 .
 ```
 #### Run the container where the ingest_data.py is executed
 ```
