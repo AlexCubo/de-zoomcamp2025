@@ -56,3 +56,13 @@ the credentials (email and password)
 In the folder where you have your <source>.ipynb file, write in bash:
 
 $ jupyter nbconvert --to=script <source>.ipynb
+
+#### Running ingest_data.py
+
+$ python ingest_data.py \
+    --user=root \
+    --password=root \
+    --host=localhost \
+    --port=5432 \
+    --db=ny_taxi \
+    --table_name=green_taxi_data
