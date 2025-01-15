@@ -4,10 +4,12 @@ WORKDIR /app
 
 COPY requirements.txt requirements.txt
 COPY data data
-COPY pipeline.py pipeline.py
+COPY ingest_data.py ingest_data.py
+#COPY pipeline.py pipeline.py
 
 RUN pip install -r requirements.txt
 
-ENTRYPOINT [ "python", "pipeline.py" ]
+ENTRYPOINT [ "python", "ingest_data.py" ]
 
-#NTRYPOINT [ "bash" ]
+#ENTRYPOINT [ "bash" ]
+#ENTRYPOINT [ "python", "pipeline.py" ]
