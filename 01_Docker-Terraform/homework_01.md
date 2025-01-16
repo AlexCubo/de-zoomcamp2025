@@ -1,158 +1,149 @@
-## Module 1 - Homework
+### Question 1. 
+#### Run docker with the python:3.12.8 image in an interactive mode, use the entrypoint bash. What's the version of pip in the image?
 
-### Docker & SQL
+1. $ docker run -it python:3.12.8 bash
+2. root@251693c867c5:/# pip --version
 
-#### Question 1 
-**Which sub-command does this:** *Remove one or more images* 
-$ docker --help
+Result: 
+```
+pip 24.3.1 from /usr/local/lib/python3.12/site-packages/pip
+```
+Answer:
+```24.3.1 ```
 
-**Answer:**
-rmi         Remove one or more images
+### Question 2.
+#### Given the following docker-compose.yaml, what is the hostname and port that pgadmin should use to connect to the postgres database?
+```
+services:
+  db:
+    container_name: postgres
+    image: postgres:17-alpine
+    environment:
+      POSTGRES_USER: 'postgres'
+      POSTGRES_PASSWORD: 'postgres'
+      POSTGRES_DB: 'ny_taxi'
+    ports:
+      - '5433:5432'
+    volumes:
+      - vol-pgdata:/var/lib/postgresql/data
 
+  pgadmin:
+    container_name: pgadmin
+    image: dpage/pgadmin4:latest
+    environment:
+      PGADMIN_DEFAULT_EMAIL: "pgadmin@pgadmin.com"
+      PGADMIN_DEFAULT_PASSWORD: "pgadmin"
+    ports:
+      - "8080:80"
+    volumes:
+      - vol-pgadmin_data:/var/lib/pgadmin  
 
-#### Questions 2
-**What's the version of pip in the image**
-
-**Answer:**
-```root@80e39b05b31e:/app# pip --version
-pip 24.3.1 from /usr/local/lib/python3.12/site-packages/pip (python 3.12)
+volumes:
+  vol-pgdata:
+    name: vol-pgdata
+  vol-pgadmin_data:
+    name: vol-pgadmin_data
+```
+Answer:
+```
+db:5432
 ```
 
-#### Question 3 - Count records
-**How many taxi trips were made on Oct 18th 2019?**
+### Question 3.
+#### During the period of October 1st 2019 (inclusive) and November 1st 2019 (exclusive), how many trips, respectively, happened:
+1. Up to 1 mile
+2. In between 1 (exclusive) and 3 miles (inclusive),
+3. In between 3 (exclusive) and 7 miles (inclusive),
+4. In between 7 (exclusive) and 10 miles (inclusive),
+5. Over 10 miles
 
-Input in pgadmin:
+Query:
 ```
-SELECT COUNT(*)
+with one as
+(select count(index) from green_taxi_data where trip_distance <= 1),
+three as
+(select count(index) from green_taxi_data where trip_distance > 1 
+											and  trip_distance <= 3),
+seven as 
+(select count(index) from green_taxi_data where trip_distance > 3
+											and  trip_distance <= 7),
+ten as
+(select count(index) from green_taxi_data where trip_distance > 7
+											and  trip_distance <= 10),
+morethen10 as
+(select count(index) from green_taxi_data where trip_distance > 10)
+select * from one, three, seven, ten, morethen10;
+```
+Answer:
+```
+104838	199013	109645	27688	35202
+```
+### Question 4.
+####  Which was the pick up day with the longest trip distance? Use the pick up time for your calculations.
+
+Query:
+```
+SELECT 
+	CAST(lpep_pickup_datetime AS DATE) AS data_max_trip
 FROM green_taxi_data
-WHERE lpep_pickup_datetime > '2019-10-18 00:00:00' 
-	AND lpep_dropoff_datetime < '2019-10-19 00:00:00';
+WHERE trip_distance = (SELECT MAX(trip_distance)FROM green_taxi_data);
 ```
 Answer:
 ```
-17417
+2019-10-31
 ```
 
-#### Question 4 - Longest trip for each day
-**Which was the pickup day with the longest trip distane**
+### Question 5.
+#### Which were the top pickup locations with over 13,000 in total_amount (across all trips) for 2019-10-18?
 
+Query:
+```
+WITH top_locations AS
+(SELECT td."PULocationID" as "locID", SUM(td."total_amount") as sum_tot_amount
+ FROM green_taxi_data td
+ WHERE DATE(td."lpep_pickup_datetime") = '2019-10-18'
+ GROUP BY 1)
+SELECT zl."Zone", tl."locID", tl."sum_tot_amount"
+FROM taxi_zone_lookup zl
+JOIN top_locations tl
+ON tl."locID"=zl."LocationID"
+ORDER BY tl."sum_tot_amount" DESC
+LIMIT 3;
+```
+Answer:
+```
+East Harlem North, East Harlem South, Morningside Heights
+```
 
-![alt text](./docker/images/image.png)
+### Question 6.
+#### For the passengers picked up in Ocrober 2019 in the zone name "East Harlem North" which was the drop off zone that had the largest tip?
+Query:
+```
+SELECT	zpu."Zone" AS pickup_zone, gtd."PULocationID" AS pickup_id, 
+		zdo."Zone" AS dropoff_zone, gtd."DOLocationID" AS dropoff_id,
+		gtd."tip_amount"
+FROM	taxi_zone_lookup zpu
+JOIN	green_taxi_data gtd
+ON 		zpu."LocationID" = gtd."PULocationID"
+JOIN	taxi_zone_lookup zdo
+ON 		zdo."LocationID" = gtd."DOLocationID"
+WHERE	zpu."Zone" = 'East Harlem North'
+ORDER BY	gtd."tip_amount" DESC
+LIMIT 	1;
+```
+Results:
+```
+|"pickup_zone"      |"pickup_id"| "dropoff_zone" |"dropoff_id"|"tip_amount"|
+|"East Harlem North"|    "74"   |  "JFK Airport" |    "132"   |   "87.3"   |
+```
+Answer:
+```JFK Airport ```
 
-#### Question 5 - Three biggest pickup zones
-** Which were the top pickup locations with over 13,000 in total_amount
-for day 2019-10-18 ** 
-
-![alt text](./docker/images/image-2.png)
-
-Answer:  
-*East Harlem North, East Harlem South, Morningside Heights*
-
-#### Question 6 -Largest trip
-**For the passengers picked up in October 2019 in the zone "East Halem North" which was the drop off zone that had the largest tip?** 
-
-![alt text](./docker/images/image-1.png)
+### Question 7
+#### Which of the following sequences, respectively, describes the workflow for:
+1. Downloading the provider plugins and setting up backend,
+2. Generating proposed changes and auto-executing the plan
+3. Remove all resources managed by terraform`
 
 Answer:
-*JFK Airport*
-
-### Terraform
-
-#### Question 7 - Creating resources
-
-**input:**  
-$ terraform apply
-
-**output:**  
-```
-Terraform used the selected providers to generate the following execution plan. Resource actions are indicated
-with the following symbols:
-  + create
-
-Terraform will perform the following actions:
-
-  # google_bigquery_dataset.dezc2025-dataset will be created
-  + resource "google_bigquery_dataset" "dezc2025-dataset" {
-      + creation_time              = (known after apply)
-      + dataset_id                 = "dezc2025_bq_dataset"
-      + default_collation          = (known after apply)
-      + delete_contents_on_destroy = false
-      + effective_labels           = {
-          + "goog-terraform-provisioned" = "true"
-        }
-      + etag                       = (known after apply)
-      + id                         = (known after apply)
-      + is_case_insensitive        = (known after apply)
-      + last_modified_time         = (known after apply)
-      + location                   = "US"
-      + max_time_travel_hours      = (known after apply)
-      + project                    = "de-zoomcamp2025"
-      + self_link                  = (known after apply)
-      + storage_billing_model      = (known after apply)
-      + terraform_labels           = {
-          + "goog-terraform-provisioned" = "true"
-        }
-
-      + access (known after apply)
-    }
-
-  # google_storage_bucket.dezc2025-bucket will be created
-  + resource "google_storage_bucket" "dezc2025-bucket" {
-      + effective_labels            = {
-          + "goog-terraform-provisioned" = "true"
-        }
-      + force_destroy               = true
-      + id                          = (known after apply)
-      + location                    = "EU"
-      + name                        = "dezc2025-bucket_prj639804374698"
-      + project                     = (known after apply)
-      + project_number              = (known after apply)
-      + public_access_prevention    = (known after apply)
-      + rpo                         = (known after apply)
-      + self_link                   = (known after apply)
-      + storage_class               = "STANDARD"
-      + terraform_labels            = {
-          + "goog-terraform-provisioned" = "true"
-        }
-      + uniform_bucket_level_access = (known after apply)
-      + url                         = (known after apply)
-
-      + lifecycle_rule {
-          + action {
-              + type          = "AbortIncompleteMultipartUpload"
-                # (1 unchanged attribute hidden)
-            }
-          + condition {
-              + age                    = 1
-              + matches_prefix         = []
-              + matches_storage_class  = []
-              + matches_suffix         = []
-              + with_state             = (known after apply)
-                # (3 unchanged attributes hidden)
-            }
-        }
-
-      + soft_delete_policy (known after apply)
-
-      + versioning (known after apply)
-
-      + website (known after apply)
-    }
-
-Plan: 2 to add, 0 to change, 0 to destroy.
-
-Do you want to perform these actions?
-  Terraform will perform the actions described above.
-  Only 'yes' will be accepted to approve.
-
-  Enter a value: yes
-
-google_bigquery_dataset.dezc2025-dataset: Creating...
-google_storage_bucket.dezc2025-bucket: Creating...
-google_bigquery_dataset.dezc2025-dataset: Creation complete after 1s [id=projects/de-zoomcamp2025/datasets/dezc2025_bq_dataset]
-google_storage_bucket.dezc2025-bucket: Creation complete after 2s [id=dezc2025-bucket_prj639804374698]
-```
-
-
-
-
+``` terraform init, terraform apply -auto-approve, terraform destroy ```
