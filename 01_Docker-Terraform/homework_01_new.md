@@ -111,3 +111,36 @@ Result:
 ```
 East Harlem North, East Harlem South, Morningside Heights
 ```
+
+### Question 6.
+#### For the passengers picked up in Ocrober 2019 in the zone name "East Harlem North" which was the drop off zone that had the largest tip?
+Query:
+```
+SELECT	zpu."Zone" AS pickup_zone, gtd."PULocationID" AS pickup_id, 
+		zdo."Zone" AS dropoff_zone, gtd."DOLocationID" AS dropoff_id,
+		gtd."tip_amount"
+FROM	taxi_zone_lookup zpu
+JOIN	green_taxi_data gtd
+ON 		zpu."LocationID" = gtd."PULocationID"
+JOIN	taxi_zone_lookup zdo
+ON 		zdo."LocationID" = gtd."DOLocationID"
+WHERE	zpu."Zone" = 'East Harlem North'
+ORDER BY	gtd."tip_amount" DESC
+LIMIT 	1;
+```
+Results:
+```
+|"pickup_zone"      |"pickup_id"| "dropoff_zone" |"dropoff_id"|"tip_amount"|
+|"East Harlem North"|    "74"   |  "JFK Airport" |    "132"   |   "87.3"   |
+```
+Answer:
+```JFK Airport ```
+
+### Question 7
+#### Which of the following sequences, respectively, describes the workflow for:
+1. Downloading the provider plugins and setting up backend,
+2. Generating proposed changes and auto-executing the plan
+3. Remove all resources managed by terraform`
+
+Answer:
+``` terraform init, terraform apply -auto-approve, terraform destroy ```
