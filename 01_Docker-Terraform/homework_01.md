@@ -1,3 +1,7 @@
+
+## Module 1
+
+## Docker & SQL
 ### Question 1. 
 #### Run docker with the python:3.12.8 image in an interactive mode, use the entrypoint bash. What's the version of pip in the image?
 
@@ -138,6 +142,8 @@ Results:
 ```
 Answer:
 ```JFK Airport ```
+
+## Terraform
 
 ### Question 7
 #### Which of the following sequences, respectively, describes the workflow for:
