@@ -92,3 +92,23 @@ To list the files and subdirectories present in a specific folder:
 $ python -m http.server
 ```
 Then past in the browser *localhost:8000*
+
+#### Using docker compose (Ubuntu)
+To launch the postgres and pgadmin containers using docker compose and then populate the postgres database (ny_taxi) using the Dockerized ingest_data.py script, follow these steps:
+
+1. You must have a docker-compose.yaml file with the two servises for postgres db and pgadmin (See "DE Zoomcamp 1.2.5 - Running Postgres and pgAdmin with Docker-compose")
+
+2. In the folder where you have the docker-compose.yaml file run
+```
+$ docker compose up
+```
+3. In the same folder (where you have the ingest_data.py script too) run
+```
+$ docker run  ingest_taxi:v001    \
+    --user="root"  \
+    --password="root" \
+    --host="172.17.0.1" \
+    --port="5432" \
+    --db="ny_taxi" \   
+    --table_name="green_taxi_data" \
+
