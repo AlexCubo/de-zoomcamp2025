@@ -1,0 +1,39 @@
+id: 04_gcp_kv
+namespace: zoomcamp2025
+
+tasks:
+  #- id: gcp_creds
+  #  type: io.kestra.plugin.core.kv.Set
+  #  key: GCP_CREDS
+  #  kvType: JSON
+  #  value: |
+    
+  - id: gcp_project_name
+    type: io.kestra.plugin.core.kv.Set
+    key: GCP_PROJECT_NAME
+    kvType: STRING
+    value: de-zoomcamp2025 
+#
+  - id: gcp_location
+    type: io.kestra.plugin.core.kv.Set
+    key: GCP_LOCATION
+    kvType: STRING
+    value: EU
+#
+  - id: gcp_bucket_name
+    type: io.kestra.plugin.core.kv.Set
+    key: GCP_BUCKET_NAME
+    kvType: STRING
+    value: dezc2025-bucket_prj639804374698
+  
+#
+  - id: gcp_dataset
+    type: io.kestra.plugin.core.kv.Set
+    key: GCP_DATASET
+    kvType: STRING
+    value: dezc2025_bq_dataset
+
+
+
+
+
