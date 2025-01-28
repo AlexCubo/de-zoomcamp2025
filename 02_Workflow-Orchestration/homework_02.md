@@ -7,18 +7,27 @@
 ### Question 1. 
 #### Within the execution for Yellow Taxi data for the year 2020 and month 12: what is the uncompressed file size (i.e. the output file yellow_tripdata_2020-12.csv of the extract task)?
 
-1. $ docker run -it python:3.12.8 bash
-2. root@251693c867c5:/# pip --version
+I have created a new kestra flow similar to 06_gcp_taxi (where I have deleted all gcs upload, table creation, merge and so on) I let it run until the "extract" task selecting at run time the input variables:
+* taxi: yellow
+* year: 2020
+* month: 12
+I execute the flow. After that in "Execution" menu I selected Outputs > extract > outputFile > yellow_tripdata_2020-12.csv, and I have read the size:
 
-Result: 
+Answer:  
 ```
-pip 24.3.1 from /usr/local/lib/python3.12/site-packages/pip
+128.3 MB
 ```
-Answer:
-```24.3.1 ```
+
 
 ### Question 2.
-#### Given the following docker-compose.yaml, what is the hostname and port that pgadmin should use to connect to the postgres database?
+#### What is the rendered value of the variable file when the inputs taxi is set to green, year is set to 2020, and month is set to 04 during execution?
+
+The answer can be found looking at the Execution of the flow 06_gcp_taxi_scheduled when it is running the subflow for the green taxi on the date 2020-04. If you look at the labels, one label is ```file:green_tripdata_2020-04.csv`` which is the value of the rendered file variable.  
+
+Answeer:
+```
+green_tripdata_2020-04.csv
+```
 
 
 
